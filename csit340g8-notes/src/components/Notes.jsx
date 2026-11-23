@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import { useState } from 'react'
+import { useEffect} from 'react'
 import NoteCard from './NoteCard.jsx'
 
 function Notes() {
@@ -20,6 +21,10 @@ function Notes() {
   })
   const [searchTerm, setSearchTerm] = useState('')
 
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes))
+  }, [notes])
+
   const handleChange = (event) => {
     const { name, value } = event.target
 
@@ -28,6 +33,7 @@ function Notes() {
       [name]: value,
     }))
   }
+
 
   const handleSubmit = (event) => {
     event.preventDefault()
