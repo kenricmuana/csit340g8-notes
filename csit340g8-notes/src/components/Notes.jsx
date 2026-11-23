@@ -1,4 +1,4 @@
-import { useState ,useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import NoteCard from './NoteCard.jsx'
 
 const startingNotes = [
@@ -20,10 +20,11 @@ function Notes() {
     return saved ? JSON.parse(saved) : startingNotes
   })
 
-  const [formData, setFormData] = useState({
-    title: '',
-    body: '',
-  })
+  const [formData, setFormData] = useState(() => {
+  const saved = localStorage.getItem('draft')
+  return saved ? JSON.parse(saved) : { title: '', body: '' }
+})
+
   const [searchTerm, setSearchTerm] = useState('')
   const titleRef = useRef(null)
 
@@ -70,9 +71,9 @@ function Notes() {
     titleRef.current.focus()
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = useCallback((id) => {
     setNotes((currentNotes) => currentNotes.filter((note) => note.id !== id))
-  }
+  }, [notes])
 
   const filteredNotes = useMemo(() => {
     console.log('filtering')

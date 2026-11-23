@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, memo } from 'react'
 import { SettingsContext } from '../SettingsContext.js'
 
 function NoteCard({ id, title, body, onDelete }) {
@@ -44,5 +44,5 @@ function NoteCard({ id, title, body, onDelete }) {
     </div>
   )
 }
- 
-export default NoteCard
+
+export default memo(NoteCard)
